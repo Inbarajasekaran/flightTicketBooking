@@ -1,0 +1,52 @@
+<mat-tab-group>
+    <mat-tab label="Book Ticket">
+        <form [formGroup]="bookTicket" class="col-12 row">
+            <mat-form-field appearance="outline" class="col-3">
+                <mat-label>Flight Name</mat-label>
+                <mat-select formControlName="flightNameControl">
+                    <mat-option *ngFor="let name of flightData" [value]="name.flightName" (click)="flightChoosed(name)">
+                        {{name.flightName}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-radio-group formControlName="class" (change)="classChoosed($event)" [disabled]="!enableClass">
+                <mat-radio-button value="1">Business</mat-radio-button>
+                <mat-radio-button value="2">Economic</mat-radio-button>
+            </mat-radio-group>
+            <mat-hint *ngIf="bookTicket.controls.class.value == 1">
+                Business Class -
+                NUmber of Seats Availabel : {{selectedFlight.businessSeat}} <br>
+                Price : {{selectedFlight.businessClassPrice}}
+            </mat-hint>
+            <mat-hint *ngIf="bookTicket.controls.class.value == 2">
+                Economic Class -
+                NUmber of Seats Availabel : {{selectedFlight.economicSeat}} <br>
+                Price : {{selectedFlight.economicClassPrice}}
+            </mat-hint>
+            <mat-form-field appearance="outline" class="col-3">
+                <mat-label>Number of Ticket</mat-label>
+                <input matInput formControlName="noOfTkt" type="number" #inpVal (input)="getNoOfTkt(inpVal.value)">
+            </mat-form-field>
+            <mat-hint *ngIf="showTotal">
+                Number of Seat left : {{remainingSeat}} <br>
+                Total Price : {{totalAmt}}
+            </mat-hint>
+            <div class="col-12 d-flex">
+                <button mat-stroked-button (click)="submitTktBooking()" [disabled]="bookTicket.invalid" class="col-2"
+                *ngIf="isLogin">Book Ticket</button>
+                <button mat-stroked-button (click)="loginAndBook()" [disabled]="bookTicket.invalid" class="col-2"
+                *ngIf="!isLogin">Login && Book Ticket</button>
+            </div>
+        </form>
+    </mat-tab>
+    <mat-tab label="My Bookings">
+        <div class="col-12" *ngFor="let loop of myTicktes">
+            class : {{loop.class}} <br>
+            flightNameControl : {{loop.flightNameControl}} <br>
+            Number of Tickets : {{loop.noOfTkt}}
+        </div>
+    </mat-tab>
+    <mat-tab label="FAQ">
+    </mat-tab>
+    <mat-tab label="Offers">
+    </mat-tab>
+</mat-tab-group>
