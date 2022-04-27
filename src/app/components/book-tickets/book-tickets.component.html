@@ -24,7 +24,8 @@
             </mat-hint>
             <mat-form-field appearance="outline" class="col-3">
                 <mat-label>Number of Ticket</mat-label>
-                <input matInput formControlName="noOfTkt" type="number" #inpVal (input)="getNoOfTkt(inpVal.value)">
+                <input matInput formControlName="noOfTkt" type="number" #inpVal (input)="getNoOfTkt(inpVal.value)" 
+                [disabled]="bookTicket.controls.class.value == '' || bookTicket.controls.class.value == null ">
             </mat-form-field>
             <mat-hint *ngIf="showTotal">
                 Number of Seat left : {{remainingSeat}} <br>

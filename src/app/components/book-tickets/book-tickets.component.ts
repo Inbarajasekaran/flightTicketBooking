@@ -77,8 +77,11 @@ export class BookTicketsComponent implements OnInit {
   }
 
   submitTktBooking() {
-    this.selectedFlight['businessSeat'] = this.selectedFlight['businessSeat'] - this.noOfTkt
-    this.selectedFlight['economicSeat'] = this.selectedFlight['economicSeat'] - this.noOfTkt
+    if (this.classSelected == 1) {
+      this.selectedFlight['businessSeat'] = this.selectedFlight['businessSeat'] - this.noOfTkt
+    } else if (this.classSelected == 2) {
+      this.selectedFlight['economicSeat'] = this.selectedFlight['economicSeat'] - this.noOfTkt
+    }
     this.myTicktes.push(this.bookTicket.value)
     this.db.booked.push(this.bookTicket.value)
     console.log("Booked flight", this.db.booked)
